@@ -1,0 +1,26 @@
+{
+  "extends": "./tsconfig.json",
+  "exclude": [
+    "node_modules",
+    "test/**",
+    "dist",
+    "lib",
+    "build",
+    "**/*spec.ts",
+    "**/jest.config.js",
+    "**/jest.node.config.js",
+    "**/jest.react.config.js",
+    "**/.prettierrc.js",
+    "**/eslintrc.js",
+    "**/eslintrc.node.js",
+    "**/eslintrc.react.js",
+    "**/webpack.config.js"
+  ],
+  "include": [
+    "./src/**/*.ts"
+  ],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "sourceMap": false
+  }
+}

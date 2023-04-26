@@ -1,0 +1,42 @@
+version: 0.2
+# AWS CodeBuild spec.
+# See : https://docs.aws.amazon.com/codebuild/latest/userguide/build-spec-ref.html
+env:
+  variables:
+    SLS_DEBUG: "*"
+phases:
+  install:
+    runtime-versions:
+      nodejs: 16
+    commands:
+      - node --version
+      - npm --version
+      - NODE_ENV=test npm install -g serverless
+      - cd ./shell-ms && pwd && NODE_ENV=test npm install
+      - cd ../shell && pwd && NODE_ENV=test npm install
+      - cd ../athlete-manager-ms && pwd && NODE_ENV=test npm install
+      - cd ../athlete-manager && pwd && NODE_ENV=test npm install
+      - cd ../shared && pwd && NODE_ENV=test npm install
+      - npm run copy:all
+    finally:
+      - cd ..
+  build:
+    commands:
+      - serverless config credentials --provider aws --key $AWS_SLS_ACCESS_KEY_ID --secret $AWS_SLS_SECRET_ACCESS_KEY --profile $SLS_PROFILE
+      - cd ./athlete-manager && pwd && printenv
+      - npm run test -- --coverage
+      - NODE_ENV=production npm run build
+      - sls deploy --stage production --verbose --conceal
+      - cd ../shell && pwd && printenv
+      - npm run test -- --coverage --watchAll=false
+      - NODE_ENV=production npm run build
+      - sls deploy --stage production --verbose --conceal
+      - cd ../shell-ms && pwd && printenv
+      - npm run test -- --coverage
+      - sls deploy --stage production --verbose --conceal
+      - cd ../athlete-manager-ms && pwd && printenv
+      - npm run test -- --coverage
+      - sls deploy --stage production --verbose --conceal
+      - exit $?
+    finally:
+      - cd ..

@@ -1,0 +1,97 @@
+service: athlete-manager-ms
+
+package:
+  individually: true
+  excludeDevDependencies: true
+
+plugins:
+  - serverless-plugin-optimize
+  - serverless-offline
+  - serverless-webpack
+
+useDotenv: true
+custom:
+  stage: ${opt:stage, self:provider.stage}
+  environment: ${file(envs/env.${self:custom.stage}.yaml)}
+  serverless-offline:
+    allowCache: false
+    httpPort: ${self:custom.environment.PORT, 5001}
+    lambdaPort: 3101
+    reloadHandler: true
+    # This is used only in local development! Forces the stage to be dev and uses them in the endpoints.
+    stage: dev
+  optimize:
+    presets: ['es2017']
+    excludeStage:
+    - dev
+    - test
+  webpack:
+    excludeFiles:
+      - test/**
+    keepOutputDirectory: true
+    includeModules: true # need to include modules for module resolution
+    packager: npm
+    webpackConfig: 'webpack.config.js'
+
+provider:
+  name: aws
+  timeout: 20
+  endpointType: REGIONAL
+  apiGateway:
+    minimumCompressionSize: 2048
+    disableDefaultEndpoint: true
+    usagePlan:
+      quota:
+        limit: 5000
+        offset: 2
+        period: MONTH
+      throttle:
+        burstLimit: 30
+        rateLimit: 10
+  logs:
+    restApi:
+      accessLogging: true
+      executionLogging: true
+      level: ERROR
+      format: '{ "requestId":"$context.requestId", "ip": "$context.identity.sourceIp", "requestTime":"$context.requestTime", "httpMethod":"$context.httpMethod", "path": "$context.path", "routeKey":"$context.routeKey", "status":"$context.status","protocol":"$context.protocol", "responseLength":"$context.responseLength", "userAgent": "$context.identity.userAgent", "integrationError": "$context.integrationErrorMessage" }'
+  environment:
+    AUTH0_URL: ${self:custom.environment.AUTH0_URL}
+    AUTH0_CLIENT_ID: ${self:custom.environment.AUTH0_CLIENT_ID}
+    HOSTNAME: ${self:custom.environment.HOSTNAME, "localhost"}
+    NODE_ENV: ${self:custom.environment.NODE_ENV, "development"}
+    CORS_ALLOWED_ORIGINS: ${self:custom.environment.CORS_ALLOWED_ORIGINS}
+    CORS_ALLOWED_METHODS: ${self:custom.environment.CORS_ALLOWED_METHODS}
+    MONGODB_ENDPOINT: ${self:custom.environment.MONGODB_ENDPOINT}
+    MONGODB_USERNAME: ${self:custom.environment.MONGODB_USERNAME}
+    MONGODB_PASSWORD: ${self:custom.environment.MONGODB_PASSWORD}
+    MONGO_CREATE_SCHEMA: ${self:custom.environment.MONGO_CREATE_SCHEMA}
+    LOG_LEVEL: ${self:custom.environment.LOG_LEVEL, "warn"}
+  deploymentMethod: direct
+  profile: ${self:custom.environment.SLS_PROFILE}
+  region: ${self:custom.environment.AWS_REGION}
+  runtime: nodejs16.x
+
+resources:
+  Resources:
+    GatewayResponseDefault4XX: ${file(resources/apiGateway.yaml):GatewayResponseDefault4XX}
+    GatewayResponseAccessDenied: ${file(resources/apiGateway.yaml):GatewayResponseAccessDenied}
+    GatewayResponseUnauthorized: ${file(resources/apiGateway.yaml):GatewayResponseUnauthorized}
+
+functions:
+  jwt-authorize-athlete-manager-ms:
+    handler: src/lambda/lambda-authorizer/authorize.handler
+    memorySize: 256
+  main:
+    handler: src/lambda/main.handler
+    events:
+      - http:
+          method: OPTIONS
+          path: /{any+}
+      - http:
+          method: any
+          path: /{any+}
+          authorizer:
+            name: jwt-authorize-athlete-manager-ms
+            identitySource: method.request.header.cookie
+            type: request
+            resultTtlInSeconds: 0

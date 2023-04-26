@@ -1,0 +1,47 @@
+service: athlete-manager-mfe
+
+package:
+  individually: true
+  excludeDevDependencies: true
+
+plugins:
+  - serverless-s3-sync
+
+useDotenv: true
+custom:
+  stage: ${opt:stage, self:provider.stage}
+  environment: ${file(envs/env.${self:custom.stage}.yaml)}
+  s3Bucket: suomen-pyoraily-hpy-mfe-athlete-manager
+  s3Sync:
+    # A simple configuration for copying static assets
+    - bucketName: ${self:custom.s3Bucket}
+      localDir: build
+      deleteRemoved: true
+
+provider:
+  name: aws
+  profile: ${env:SLS_PROFILE}
+  region: ${env:AWS_REGION}
+
+resources:
+  Resources:
+    AssetsBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.s3Bucket}
+        AccessControl: PublicRead
+        WebsiteConfiguration:
+          IndexDocument: index.html
+    PublicBucketPolicy:
+      Type: AWS::S3::BucketPolicy
+      Properties:
+        Bucket: !Ref AssetsBucket
+        PolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+            - Effect: Allow
+              Action:
+                - "s3:GetObject"
+              Resource:
+                - !Sub "${AssetsBucket.Arn}/*"
+              Principal: "*"

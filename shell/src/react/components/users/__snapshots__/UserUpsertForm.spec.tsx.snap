@@ -1,0 +1,218 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserEditForm should match the snapshot 1`] = `
+<div>
+  <div
+    class="header"
+  >
+    Test title
+  </div>
+  <div
+    class="content"
+  >
+    <div
+      class="description"
+    >
+      Test description
+    </div>
+    <form
+      class="ui form"
+      id="user-upsert-form"
+    >
+      <div
+        class="required field"
+      >
+        <label
+          for="user-upsert-form-first-name"
+        >
+          First name
+        </label>
+        <div
+          class="ui input"
+        >
+          <input
+            id="user-upsert-form-first-name"
+            name="firstName"
+            required=""
+            type="text"
+            value="Skid"
+          />
+        </div>
+      </div>
+      <div
+        class="required field"
+      >
+        <label
+          for="user-upsert-form-last-name"
+        >
+          Last name
+        </label>
+        <div
+          class="ui input"
+        >
+          <input
+            id="user-upsert-form-last-name"
+            name="lastName"
+            required=""
+            type="text"
+            value="Mark"
+          />
+        </div>
+      </div>
+      <div
+        class="required field"
+      >
+        <label
+          for="user-upsert-form-email"
+        >
+          Email
+        </label>
+        <div
+          class="ui input"
+        >
+          <input
+            id="user-upsert-form-email"
+            name="email"
+            required=""
+            type="text"
+            value="test@test.com"
+          />
+        </div>
+      </div>
+      <div
+        class="field"
+      >
+        <label>
+          Roles
+        </label>
+        <div
+          aria-disabled="false"
+          aria-expanded="false"
+          aria-multiselectable="true"
+          class="ui fluid multiple selection dropdown"
+          id="user-upsert-form-user-roles"
+          name="userRoles"
+          role="listbox"
+          tabindex="0"
+        >
+          <a
+            class="ui label"
+            value="HPY"
+          >
+            HPY
+            <i
+              aria-hidden="true"
+              class="delete icon"
+            />
+          </a>
+          <a
+            class="ui label"
+            value="ATHLETE"
+          >
+            ATHLETE
+            <i
+              aria-hidden="true"
+              class="delete icon"
+            />
+          </a>
+          <a
+            class="ui label"
+            value="SP"
+          >
+            SP
+            <i
+              aria-hidden="true"
+              class="delete icon"
+            />
+          </a>
+          <div
+            aria-atomic="true"
+            aria-live="polite"
+            class="divider text"
+            role="alert"
+          >
+            Roles
+          </div>
+          <i
+            aria-hidden="true"
+            class="dropdown icon"
+          />
+          <div
+            class="menu transition"
+          >
+            <div
+              aria-checked="false"
+              aria-selected="true"
+              class="selected item"
+              role="option"
+              style="pointer-events: all;"
+            >
+              <span
+                class="text"
+              >
+                ADMIN
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="inline fields"
+      >
+        <label>
+          Status
+        </label>
+        <div
+          class="field"
+        >
+          <div
+            class="ui checked radio checkbox"
+          >
+            <input
+              checked=""
+              class="hidden"
+              name="status"
+              readonly=""
+              tabindex="0"
+              type="radio"
+              value="Active"
+            />
+            <label>
+              Active
+            </label>
+          </div>
+        </div>
+        <div
+          class="field"
+        >
+          <div
+            class="ui radio checkbox"
+          >
+            <input
+              class="hidden"
+              name="status"
+              readonly=""
+              tabindex="0"
+              type="radio"
+              value="Blocked"
+            />
+            <label>
+              Blocked
+            </label>
+          </div>
+        </div>
+      </div>
+      <button
+        class="ui secondary button"
+      >
+        Cancel
+      </button>
+      <button
+        class="ui primary button"
+      >
+        Save
+      </button>
+    </form>
+  </div>
+</div>
+`;

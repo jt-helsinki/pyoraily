@@ -1,0 +1,143 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UsersTable should match the snapshot 1`] = `
+<div>
+  <div
+    class="ui text loader"
+  >
+    Fetching user data...
+  </div>
+  <div
+    aria-colcount="8"
+    aria-rowcount="3"
+    class="rdg r104f42s7-0-0-beta-22"
+    dir="ltr"
+    role="grid"
+    style="resize: both; grid-template-rows: 40px repeat(2, 35px); --rdg-header-row-height: 40px; --rdg-summary-row-height: 35px; --rdg-sign: 1; grid-template-columns: 1fr 1fr 80px 80px 80px 80px 80px 80px;"
+  >
+    <div
+      aria-rowindex="1"
+      class="rdg-header-row h197vzie7-0-0-beta-22"
+      role="row"
+      style="--rdg-grid-row-start: 1;"
+    >
+      <div
+        aria-colindex="1"
+        aria-selected="false"
+        class="rdg-cell c1wupbe7-0-0-beta-22 rdg-cell-resizable celq7o97-0-0-beta-22"
+        role="columnheader"
+        style="grid-column-start: 1;"
+        tabindex="0"
+      >
+        <span
+          class="rdg-header-sort-cell h1e8ezgp7-0-0-beta-22"
+          tabindex="-1"
+        >
+          <span
+            class="rdg-header-sort-name h1rrblhe7-0-0-beta-22"
+          >
+            Name
+          </span>
+          <span />
+        </span>
+      </div>
+      <div
+        aria-colindex="2"
+        aria-selected="false"
+        class="rdg-cell c1wupbe7-0-0-beta-22 rdg-cell-resizable celq7o97-0-0-beta-22"
+        role="columnheader"
+        style="grid-column-start: 2;"
+        tabindex="-1"
+      >
+        <span
+          class="rdg-header-sort-cell h1e8ezgp7-0-0-beta-22"
+          tabindex="-1"
+        >
+          <span
+            class="rdg-header-sort-name h1rrblhe7-0-0-beta-22"
+          >
+            Email
+          </span>
+          <span />
+        </span>
+      </div>
+    </div>
+    <div
+      aria-rowindex="2"
+      class="rdg-row r1otpg647-0-0-beta-22 rdg-row-even"
+      role="row"
+      style="--rdg-grid-row-start: 2; --rdg-row-height: 35px;"
+    >
+      <div
+        aria-colindex="1"
+        aria-readonly="true"
+        aria-selected="false"
+        class="rdg-cell c1wupbe7-0-0-beta-22"
+        role="gridcell"
+        style="grid-column-start: 1;"
+        tabindex="-1"
+      >
+        Joe
+
+        Mangle
+      </div>
+      <div
+        aria-colindex="2"
+        aria-readonly="true"
+        aria-selected="false"
+        class="rdg-cell c1wupbe7-0-0-beta-22"
+        role="gridcell"
+        style="grid-column-start: 2;"
+        tabindex="-1"
+      >
+        <span>
+          test@test.com
+        </span>
+      </div>
+    </div>
+    <div
+      aria-rowindex="3"
+      class="rdg-row r1otpg647-0-0-beta-22 rdg-row-odd"
+      role="row"
+      style="--rdg-grid-row-start: 3; --rdg-row-height: 35px;"
+    >
+      <div
+        aria-colindex="1"
+        aria-readonly="true"
+        aria-selected="false"
+        class="rdg-cell c1wupbe7-0-0-beta-22"
+        role="gridcell"
+        style="grid-column-start: 1;"
+        tabindex="-1"
+      >
+        Joe
+
+        Mangle
+      </div>
+      <div
+        aria-colindex="2"
+        aria-readonly="true"
+        aria-selected="false"
+        class="rdg-cell c1wupbe7-0-0-beta-22"
+        role="gridcell"
+        style="grid-column-start: 2;"
+        tabindex="-1"
+      >
+        <span>
+          test@test.com
+        </span>
+      </div>
+    </div>
+    <div
+      class="m1l09lto7-0-0-beta-22"
+      data-measuring-cell-key="fullName"
+      style="grid-column-start: 1; min-width: 80px;"
+    />
+    <div
+      class="m1l09lto7-0-0-beta-22"
+      data-measuring-cell-key="email"
+      style="grid-column-start: 2; min-width: 80px;"
+    />
+  </div>
+</div>
+`;

@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    restart: unless-stopped
+    networks:
+      - my_bridge_network
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=example_password
+    volumes:
+      - ./workspace:/workspace
+      - ./.mongodb_data:/data/db
+    ports:
+      - 27017:27017
+
+  mongo-express:
+    image: mongo-express:latest
+    container_name: mongo-express
+    restart: unless-stopped
+    networks:
+      - my_bridge_network
+    environment:
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=root
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=example_password
+      - ME_CONFIG_MONGODB_SERVER=mongodb
+      - ME_CONFIG_OPTIONS_FULLWIDTH_LAYOUT=true
+    ports:
+      - 8081:8081
+
+networks:
+  my_bridge_network:
+    driver: bridge

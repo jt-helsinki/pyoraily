@@ -1,0 +1,172 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Profile should match the snapshot 1`] = `
+<div>
+  <div
+    class="ui grid"
+  >
+    <div
+      class="row"
+    >
+      <div
+        class="column"
+      >
+        <div
+          class="ui grey tiny label"
+        >
+          HPY
+        </div>
+        <div
+          class="ui grey tiny label"
+        >
+          SP
+        </div>
+        <div
+          class="ui grey tiny label"
+        >
+          ATHLETE
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="column"
+      >
+        <p>
+          <i
+            aria-hidden="true"
+            class="user outline icon"
+          />
+        </p>
+      </div>
+      <div
+        class="four wide column"
+      >
+        <p>
+          Skid
+        </p>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="column"
+      >
+        <p>
+          <i
+            aria-hidden="true"
+            class="user icon"
+          />
+        </p>
+      </div>
+      <div
+        class="four wide column"
+      >
+        <p>
+          Mark
+        </p>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="column"
+      >
+        <p>
+          <i
+            aria-hidden="true"
+            class="heterosexual icon"
+          />
+        </p>
+      </div>
+      <div
+        class="four wide column"
+      >
+        <p>
+          male
+        </p>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="column"
+      >
+        <p>
+          <i
+            aria-hidden="true"
+            class="birthday cake icon"
+          />
+        </p>
+      </div>
+      <div
+        class="four wide column"
+      >
+        <p>
+          2000
+        </p>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="column"
+      >
+        <p>
+          <i
+            aria-hidden="true"
+            class="mail icon"
+          />
+        </p>
+      </div>
+      <div
+        class="four wide column"
+      >
+        <p>
+          test@test.com
+        </p>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="column"
+      >
+        <p>
+          <i
+            aria-hidden="true"
+            class="id badge icon"
+          />
+        </p>
+      </div>
+      <div
+        class="four wide column"
+      >
+        <p>
+          No UCI ID set.
+        </p>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="column"
+      >
+        <button
+          class="ui primary button"
+        >
+          Update
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+`;

@@ -1,0 +1,16 @@
+shell/src/*.{ts,tsx}:
+  - ./shell/node_modules/.bin/prettier --write --ignore-unknown
+  - ./shell/node_modules/.bin/eslint --fix
+  - ./shell/node_modules/.bin/jest --bail --findRelatedTests --config=./shell/jest.config.js
+user-mangement-ms/src/*.{ts,tsx}:
+  - ./user-mangement-ms/node_modules/.bin/prettier --write --ignore-unknown
+  - ./user-mangement-ms/node_modules/.bin/eslint --fix
+  - ./user-mangement-ms/node_modules/.bin/jest --bail --findRelatedTests --config=./user-mangement-ms/jest.config.js
+service-mangager-ms/src/*.{ts,tsx}:
+  - ./service-mangager-ms/node_modules/.bin/prettier --write --ignore-unknown
+  - ./service-mangager-ms/node_modules/.bin/eslint --fix
+  - ./service-mangager-ms/node_modules/.bin/jest --bail --findRelatedTests --config=./service-mangager-ms/jest.config.js
+mfe-placeholder/src/*.{ts,tsx}:
+  - ./mfe-placeholder/node_modules/.bin/prettier --write --ignore-unknown
+  - ./mfe-placeholder/node_modules/.bin/eslint --fix
+  - ./mfe-placeholder/node_modules/.bin/jest --bail --findRelatedTests --config=./mfe-placeholder/jest.config.js

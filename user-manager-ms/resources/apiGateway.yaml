@@ -1,0 +1,58 @@
+ApiGatewayRestApi:
+  Type: AWS::ApiGateway::RestApi
+  Properties:
+    Name: ${opt:stage, 'development'}-${self:service}
+
+GatewayResponseDefault4XX:
+  Type: 'AWS::ApiGateway::GatewayResponse'
+  Properties:
+    ResponseParameters:
+      gatewayresponse.header.Access-Control-Allow-Credentials: "'true'"
+      gatewayresponse.header.Access-Control-Allow-Methods: "'GET,HEAD,PUT,PATCH,POST,DELETE'"
+      gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+      gatewayresponse.header.Access-Control-Allow-Origin: context.authorizer.access-control-allow-origin
+      gatewayresponse.header.x-error-message: context.authorizer.x-error-message
+    ResponseType: DEFAULT_4XX
+    RestApiId:
+      Ref: 'ApiGatewayRestApi'
+
+GatewayResponseDefault5XX:
+  Type: 'AWS::ApiGateway::GatewayResponse'
+  Properties:
+    ResponseParameters:
+      gatewayresponse.header.Access-Control-Allow-Credentials: "'true'"
+      gatewayresponse.header.Access-Control-Allow-Methods: "'GET,HEAD,PUT,PATCH,POST,DELETE'"
+      gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+      gatewayresponse.header.Access-Control-Allow-Origin: context.authorizer.access-control-allow-origin
+      gatewayresponse.header.x-error-message: context.authorizer.x-error-message
+    ResponseType: DEFAULT_5XX
+    RestApiId:
+      Ref: 'ApiGatewayRestApi'
+
+GatewayResponseAccessDenied:
+  Type: 'AWS::ApiGateway::GatewayResponse'
+  Properties:
+    ResponseParameters:
+      gatewayresponse.header.Access-Control-Allow-Credentials: "'true'"
+      gatewayresponse.header.Access-Control-Allow-Methods: "'GET,HEAD,PUT,PATCH,POST,DELETE'"
+      gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+      gatewayresponse.header.Access-Control-Allow-Origin: context.authorizer.access-control-allow-origin
+      gatewayresponse.header.x-error-message: context.authorizer.x-error-message
+    ResponseType: ACCESS_DENIED
+    StatusCode: '401'
+    RestApiId:
+      Ref: 'ApiGatewayRestApi'
+
+GatewayResponseUnauthorized:
+  Type: 'AWS::ApiGateway::GatewayResponse'
+  Properties:
+    ResponseParameters:
+      gatewayresponse.header.Access-Control-Allow-Credentials: "'true'"
+      gatewayresponse.header.Access-Control-Allow-Methods: "'GET,HEAD,PUT,PATCH,POST,DELETE'"
+      gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+      gatewayresponse.header.Access-Control-Allow-Origin: context.authorizer.access-control-allow-origin
+      gatewayresponse.header.x-error-message: context.authorizer.x-error-message
+    ResponseType: UNAUTHORIZED
+    StatusCode: '401'
+    RestApiId:
+      Ref: 'ApiGatewayRestApi'

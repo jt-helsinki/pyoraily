@@ -1,0 +1,110 @@
+service: user-manager-ms
+
+package:
+  individually: true
+  excludeDevDependencies: true
+
+plugins:
+  - serverless-plugin-optimize
+  - serverless-offline
+  - serverless-webpack
+
+useDotenv: true
+custom:
+  stage: ${opt:stage, self:provider.stage}
+  environment: ${file(envs/env.${self:custom.stage}.yaml)}
+  serverless-offline:
+    ignoreJWTSignature: true
+    allowCache: false
+    httpPort: ${self:custom.environment.PORT, 5000}
+    lambdaPort: 3100
+    reloadHandler: true
+    # This is used only in local development! Forces the stage to be dev and uses them in the endpoints.
+    stage: dev
+  optimize:
+    presets: ['es2017']
+    excludeStage:
+    - dev
+    - test
+  webpack:
+    excludeFiles:
+      - test/**
+      - src/**/*.spec.ts
+    keepOutputDirectory: true
+    includeModules: true
+    packager: npm
+    webpackConfig: 'webpack.config.js'
+
+provider:
+  name: aws
+  timeout: 20
+  endpointType: REGIONAL
+  apiGateway:
+    minimumCompressionSize: 2048
+    disableDefaultEndpoint: true
+    usagePlan:
+      quota:
+        limit: 5000
+        offset: 2
+        period: MONTH
+      throttle:
+        burstLimit: 30
+        rateLimit: 10
+  logs:
+    restApi:
+      accessLogging: true
+      executionLogging: true
+      level: ERROR
+      format: '{ "requestId":"$context.requestId", "ip": "$context.identity.sourceIp", "requestTime":"$context.requestTime", "httpMethod":"$context.httpMethod", "path": "$context.path", "routeKey":"$context.routeKey", "status":"$context.status","protocol":"$context.protocol", "responseLength":"$context.responseLength", "userAgent": "$context.identity.userAgent", "integrationError": "$context.integrationErrorMessage" }'
+  environment:
+    AUTH0_CLIENT_SECRET: ${self:custom.environment.AUTH0_CLIENT_SECRET}
+    AUTH0_URL: ${self:custom.environment.AUTH0_URL}
+    AUTH0_CALLBACK_URL: ${self:custom.environment.AUTH0_CALLBACK_URL}
+    AUTH0_CLIENT_ID: ${self:custom.environment.AUTH0_CLIENT_ID}
+    AUTH0_MGMT_API_AUDIENCE: ${self:custom.environment.AUTH0_MGMT_API_AUDIENCE}
+    COOKIE_DOMAIN: ${self:custom.environment.COOKIE_DOMAIN, "localhost"}
+    HOSTNAME: ${self:custom.environment.HOSTNAME, "localhost"}
+    NODE_ENV: ${self:custom.environment.NODE_ENV, "development"}
+    CORS_ALLOWED_ORIGINS: ${self:custom.environment.CORS_ALLOWED_ORIGINS}
+    CORS_ALLOWED_METHODS: ${self:custom.environment.CORS_ALLOWED_METHODS}
+    LOG_LEVEL: ${self:custom.environment.LOG_LEVEL, "warn"}
+  deploymentMethod: direct
+  profile: ${self:custom.environment.SLS_PROFILE}
+  region: ${self:custom.environment.AWS_REGION}
+  runtime: nodejs16.x
+
+resources:
+  Resources:
+    ApiGatewayRestApi: ${file(resources/apiGateway.yaml):ApiGatewayRestApi}
+    GatewayResponseDefault4XX: ${file(resources/apiGateway.yaml):GatewayResponseDefault4XX}
+    GatewayResponseAccessDenied: ${file(resources/apiGateway.yaml):GatewayResponseAccessDenied}
+    GatewayResponseUnauthorized: ${file(resources/apiGateway.yaml):GatewayResponseUnauthorized}
+
+functions:
+  jwt-authorize-user-manager-ms:
+    handler: src/lambda/lambda-authorizer/authorize.handler
+    memorySize: 256
+  main:
+    handler: src/lambda/main.handler
+    events:
+      - http:
+          method: options
+          path: /{any+}
+      # Auth
+      - http:
+          method: post
+          path: auth/authorize
+      - http:
+          method: post
+          path: auth/logout
+      # Users
+      - http:
+          method: any
+          path: /{any+}
+          authorizer:
+            name: jwt-authorize-user-manager-ms
+            identitySource: method.request.header.cookie
+            type: request
+            resultTtlInSeconds: 0
+
+

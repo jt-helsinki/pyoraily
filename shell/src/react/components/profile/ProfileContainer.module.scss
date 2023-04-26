@@ -1,0 +1,39 @@
+.fullWidthButton {
+  height: var(--s-xl);
+  width: 100% !important;
+  border-radius: 0 !important;
+  max-width: unset !important;
+  max-height: unset !important;
+}
+
+div.userProfileBody {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin-bottom: calc(var(--s-xl) * -1);
+}
+
+div.userProfileAddressLine {
+  line-height: var(--line-height-root);
+}
+
+div.profileContainer {
+  display: grid;
+  column-gap: var(--s-b);
+  row-gap: var(--s-b);
+
+  div.profileLine {
+    grid-column-start: 1;
+    grid-column-end: 8;
+  }
+
+  div.profile-column-left {
+    grid-column-start: 1;
+    grid-column-end: 1;
+  }
+
+  div.profileColumnRight {
+    grid-column-start: 2;
+    grid-column-end: 8;
+  }
+}
