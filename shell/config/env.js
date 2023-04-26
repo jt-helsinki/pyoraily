@@ -15,11 +15,11 @@ if (!NODE_ENV) {
 }
 
 // https://github.com/bkeepers/dotenv#what-other-env-files-can-i-use
-const dotenvFiles = [
+const envFiles = [
   // Don't include `.env.local` for `test` environment
   // since normally you expect tests to produce the same
   // results for everyone
-  NODE_ENV === 'production' ? `${paths.dotenv}.production` : `${paths.dotenv}.development`,
+  NODE_ENV === 'production' ? `${paths.yamlEnv}.production.yaml` : `${paths.yamlEnv}.development.yaml`,
 ].filter(Boolean);
 
 // Load environment variables from .env* files. Suppress warnings using silent
@@ -27,12 +27,10 @@ const dotenvFiles = [
 // that have already been set.  Variable expansion is supported in .env files.
 // https://github.com/motdotla/dotenv
 // https://github.com/motdotla/dotenv-expand
-dotenvFiles.forEach((dotenvFile) => {
-  if (fs.existsSync(dotenvFile)) {
+envFiles.forEach((yamlEnvFile) => {
+  if (fs.existsSync(yamlEnvFile)) {
     require('dotenv-expand')(
-      require('dotenv').config({
-        path: dotenvFile,
-      })
+      require('dotenv-yaml').config({path: yamlEnvFile})
     );
   }
 });

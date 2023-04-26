@@ -7,7 +7,6 @@ package:
 plugins:
   - serverless-s3-sync
 
-useDotenv: true
 custom:
   stage: ${opt:stage, self:provider.stage}
   environment: ${file(envs/env.${self:custom.stage}.yaml)}
@@ -20,8 +19,8 @@ custom:
 
 provider:
   name: aws
-  profile: ${env:SLS_PROFILE}
-  region: ${env:AWS_REGION}
+  profile: ${self:custom.environment.SLS_PROFILE}
+  region: ${self:custom.environment.AWS_REGION}
 
 resources:
   Resources:

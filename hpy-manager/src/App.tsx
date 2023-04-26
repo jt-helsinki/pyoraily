@@ -14,7 +14,7 @@ import '@src/styles/index.scss';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { ServerState } from '@src/state/server/ServerState';
 
-export const App = (): React.ReactElement => {
+const App = (): React.ReactElement => {
   React.useEffect(() => {
     // configure the event listeners for the MFE events
     registerEventSubscribersOnApplicationLoad.forEach(
@@ -30,3 +30,5 @@ export const App = (): React.ReactElement => {
     </QueryClientProvider>
   );
 };
+
+export default App;

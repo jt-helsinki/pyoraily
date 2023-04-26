@@ -15,13 +15,13 @@ if (!NODE_ENV) {
 
 const appDirectory = fs.realpathSync(process.cwd());
 const resolveApp = (relativePath) => path.resolve(appDirectory, relativePath);
-const dotenv = resolveApp('.env');
+const envFile = resolveApp('envs/env');
 
-const dotenvFiles = [
+const envFiles = [
   // Don't include `.env.local` for `test` environment
   // since normally you expect tests to produce the same
   // results for everyone
-  NODE_ENV === 'production' ? `${dotenv}.production` : `${dotenv}.development`,
+  NODE_ENV === 'production' ? `${envFile}.production.yaml` : `${envFile}.development.yaml`,
 ].filter(Boolean);
 
 // Load environment variables from .env* files. Suppress warnings using silent
@@ -29,12 +29,10 @@ const dotenvFiles = [
 // that have already been set.  Variable expansion is supported in .env files.
 // https://github.com/motdotla/dotenv
 // https://github.com/motdotla/dotenv-expand
-dotenvFiles.forEach((dotenvFile) => {
-  if (fs.existsSync(dotenvFile)) {
+envFiles.forEach((yamlEnvFile) => {
+  if (fs.existsSync(yamlEnvFile)) {
     require('dotenv-expand')(
-        require('dotenv').config({
-          path: dotenvFile,
-        })
+        require('dotenv-yaml').config({path: yamlEnvFile})
     );
   }
 });

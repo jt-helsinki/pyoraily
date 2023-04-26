@@ -6,7 +6,7 @@
 import { TanstackReactQueryDebug } from '@src/react/components/common/debug/TanstackReactQueryDebug';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { App } from '@src/App';
+import App from '@src/App';
 import 'semantic-ui-css/semantic.min.css';
 import { ServerState } from '@src/state/server/ServerState';
 import { QueryClientProvider } from '@tanstack/react-query';

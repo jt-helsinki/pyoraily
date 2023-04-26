@@ -40,7 +40,7 @@
     "cross-env": "^7.0.3",
     "css-loader": "^6.7.3",
     "css-minimizer-webpack-plugin": "^5.0.0",
-    "dotenv": "^10.0.0",
+    "dotenv-yaml": "^0.1.4",
     "dotenv-expand": "^5.1.0",
     "eslint": "^8.29.0",
     "eslint-config-airbnb": "^19.0.4",
