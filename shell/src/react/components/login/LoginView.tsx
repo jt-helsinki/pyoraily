@@ -44,9 +44,17 @@ export const LoginView: React.FunctionComponent = (): React.ReactElement | null 
           alignItems: 'center',
           flexDirection: 'column',
         }}>
+        <img
+          width="150"
+          height="80"
+          src="https://pyoraily.fi/wp-content/uploads/Suomen-Pyoraily-Logo-150x80.png"
+          alt="Suomen Pyöräily Logo"
+        />
         <Header>HPY Portal</Header>
-        <p style={{ marginTop: '100px' }}>
-          <Button onClick={initLogin}>Sign in</Button>
+        <p style={{ marginTop: '25px' }}>
+          <Button primary onClick={initLogin}>
+            Sign in
+          </Button>
         </p>
       </div>
     );

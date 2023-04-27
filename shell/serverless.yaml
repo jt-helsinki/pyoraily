@@ -8,7 +8,6 @@ plugins:
   - serverless-s3-sync
   - serverless-single-page-app-plugin
 
-useDotself:custom.environment. true
 custom:
   stage: ${opt:stage, self:provider.stage}
   environment: ${file(envs/env.${self:custom.stage}.yaml)}
