@@ -20,7 +20,7 @@ const LOG_LEVEL: LogLevel[] = getEnvArray('LOG_LEVEL', ['warn', 'error']) as Log
 
 async function bootstrap(): Promise<Handler<APIGatewayEvent, void>> {
   const app: INestApplication = await NestFactory.create(AppModule, {
-    logger: LOG_LEVEL
+    logger: LOG_LEVEL,
   });
   app.use(helmet());
   if (!IS_OFFLINE) {

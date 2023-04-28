@@ -48,7 +48,7 @@ export class UserEntity implements User {
       lastName: lastName,
       email: email,
       status: status,
-      userRoles: userRoles || [],
+      userRoles: userRoles.length ? userRoles : [UserRole.ATHLETE],
     });
   }
 
@@ -65,7 +65,7 @@ export class UserEntity implements User {
       yearOfBirth: profileUpdateDto.yearOfBirth,
       gender: profileUpdateDto.gender,
       uciId: profileUpdateDto.uciId,
-      userRoles: existingUserEntity.userRoles || [],
+      userRoles: existingUserEntity.userRoles.length ? existingUserEntity.userRoles : [UserRole.ATHLETE],
     });
   }
 
@@ -79,7 +79,7 @@ export class UserEntity implements User {
       gender: user.user_metadata?.gender,
       uciId: user.user_metadata?.uci_id,
       status: user.blocked ? UserStatus.Blocked : UserStatus.Active,
-      userRoles: user.user_roles ? user.user_roles : user.app_metadata?.user_roles || [],
+      userRoles: user.user_roles ? user.app_metadata?.user_roles : user.app_metadata?.user_roles || [UserRole.ATHLETE],
       updatedAt: user.updated_at,
       createdAt: user.created_at,
       lastLogin: user.last_login,

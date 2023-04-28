@@ -1,7 +1,11 @@
 import { ForbiddenException, NotFoundException, ValidationPipe } from '@nestjs/common';
 import { UserController } from '@src/controllers/UserController';
 import { UserDto } from '@src/dtos/UserDto';
-import { MOCK_AUTH0_USER_ADMIN, ATHLETE_MOCK_AUTH0_USER, HPY_MOCK_AUTH0_USER } from 'pyoraily-shared-backend/test/mocks/auth0.mock';
+import {
+  MOCK_AUTH0_USER_ADMIN,
+  ATHLETE_MOCK_AUTH0_USER,
+  HPY_MOCK_AUTH0_USER,
+} from 'pyoraily-shared-backend/test/mocks/auth0.mock';
 import { ADMIN_MOCK_USER_ENTITY, ATHLETE_MOCK_USER_ENTITY, HPY_MOCK_USER_ENTITY } from '@src/mocks/user.mock';
 import { Auth0Service } from '@src/services/Auth0Service';
 import { UserRoleService } from '@src/services/UserRoleService';
@@ -34,7 +38,9 @@ describe('UsersController', () => {
       getUser: jest.fn(),
       getUsers: jest
         .fn()
-        .mockImplementation(() => Promise.resolve([ATHLETE_MOCK_AUTH0_USER, MOCK_AUTH0_USER_ADMIN, HPY_MOCK_AUTH0_USER])),
+        .mockImplementation(() =>
+          Promise.resolve([ATHLETE_MOCK_AUTH0_USER, MOCK_AUTH0_USER_ADMIN, HPY_MOCK_AUTH0_USER])
+        ),
     });
     usersService = new UserService(authService);
     userRolesService = new UserRoleService();
@@ -73,7 +79,11 @@ describe('UsersController', () => {
         metatype: UserDto,
       });
       try {
-        await usersController.update({ user: ATHLETE_MOCK_USER_ENTITY } as any, { id: 'mock-user-id' }, transformedInput);
+        await usersController.update(
+          { user: ATHLETE_MOCK_USER_ENTITY } as any,
+          { id: 'mock-user-id' },
+          transformedInput
+        );
       } catch (error) {
         expect(error).toBeInstanceOf(ForbiddenException);
         expect(canAssignRolesSpy).toHaveBeenCalledWith(ATHLETE_MOCK_USER_ENTITY);

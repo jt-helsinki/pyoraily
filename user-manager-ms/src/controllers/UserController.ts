@@ -50,10 +50,6 @@ export class UserController {
     if (hasAdminRole) {
       return users;
     }
-    const hasHpyRole = await this.userRolesService.hasRole(request.user, UserRole.HPY);
-    if (hasHpyRole) {
-      return users.filter((user: User) => user.userRoles.some((userRole) => userRole === UserRole.ATHLETE));
-    }
     return [];
   }
 

@@ -4,6 +4,7 @@
  *
  */
 
+import { UserRole } from '../../dist/model/user/UserRole';
 import { Claims } from '../model/auth0/Claims';
 import { User } from '../model/user/User';
 import { UserStatus } from '../model/user/UserStatus';
@@ -17,6 +18,6 @@ export const userFromAuthClaims = (claims: Claims): User => {
     fullName: name,
     lastName: family_name,
     firstName: given_name,
-    userRoles: user_roles ? [...user_roles] : [],
+    userRoles: user_roles ? [...user_roles] : [UserRole.ATHLETE],
   } as User;
 };

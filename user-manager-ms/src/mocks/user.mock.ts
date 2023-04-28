@@ -5,12 +5,12 @@
  */
 import { UserEntity } from '@src/entities/UserEntity';
 import {
-    ADMIN_MOCK_USER,
-    ATHLETE_MOCK_USER, BLOCKED_MOCK_USER,
-    HPY_MOCK_USER,
-    NOT_VERIFIED_MOCK_USER
+  ADMIN_MOCK_USER,
+  ATHLETE_MOCK_USER,
+  BLOCKED_MOCK_USER,
+  HPY_MOCK_USER,
+  NOT_VERIFIED_MOCK_USER,
 } from 'pyoraily-shared-backend/test/mocks/user.mock';
-
 
 export const ATHLETE_MOCK_USER_ENTITY = new UserEntity(ATHLETE_MOCK_USER);
 

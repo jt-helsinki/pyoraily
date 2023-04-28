@@ -94,7 +94,7 @@ export class Auth0DaoImpl implements AuthDao {
 
     if (!response.ok) {
       const error = new HttpException('Get user error', response.status);
-      this.logger.log(error.message, this.getUser.name);
+      this.logger.warn(error.message, this.getUser.name);
       throw error;
     }
 
@@ -124,7 +124,7 @@ export class Auth0DaoImpl implements AuthDao {
 
     if (!response.ok) {
       const error = new HttpException('Update user error', response.status);
-      this.logger.log(error.message, this.updateUser.name);
+      this.logger.warn(error.message, this.updateUser.name);
       throw error;
     }
 
@@ -137,8 +137,7 @@ export class Auth0DaoImpl implements AuthDao {
         allAuth0RolesForuser.map((role) => role.id)
       );
       const allAuth0RolesAsMap = this.getAllRolesAsMap(allAuth0Roles);
-
-      const userRoleIds: string[] = data.user_roles
+      const userRoleIds: string[] = data.user_roles.length
         ? data.user_roles.map((role: UserRole) => allAuth0RolesAsMap[role].id)
         : [];
       await this.updateAuth0RolesForAuth0User(auth, auth0UserId, userRoleIds);
@@ -169,9 +168,10 @@ export class Auth0DaoImpl implements AuthDao {
         authorization: `${auth.token_type} ${auth.access_token}`,
       },
     });
+
     if (!response.ok) {
       const error = new HttpException('Update user error', response.status);
-      this.logger.log(error.message, this.updateAuth0RolesForAuth0User.name);
+      this.logger.warn(error.message, this.updateAuth0RolesForAuth0User.name);
       throw error;
     }
   }
@@ -189,7 +189,7 @@ export class Auth0DaoImpl implements AuthDao {
 
     if (!response.ok) {
       const error = new HttpException('Retrieving all auth0 roles error', response.status);
-      this.logger.log(error.message, this.getAllAuth0Roles.name);
+      this.logger.warn(error.message, this.getAllAuth0Roles.name);
       throw error;
     }
     return response.json();
@@ -208,9 +208,10 @@ export class Auth0DaoImpl implements AuthDao {
 
     if (!response.ok) {
       const error = new HttpException('Retrieving all auth0 roles for auth0 user error', response.status);
-      this.logger.log(error.message, this.getAllAuth0RolesForAuth0User.name);
+      this.logger.warn(error.message, this.getAllAuth0RolesForAuth0User.name);
       throw error;
     }
+
     return response.json();
   }
 
@@ -233,7 +234,7 @@ export class Auth0DaoImpl implements AuthDao {
 
     if (!response.ok) {
       const error = new HttpException('Delete auth0 roles for auth0 user error', response.status);
-      this.logger.log(error.message, this.deleteAuth0RolesForAuth0User.name);
+      this.logger.warn(error.message, this.deleteAuth0RolesForAuth0User.name);
       throw error;
     }
   }
@@ -264,7 +265,7 @@ export class Auth0DaoImpl implements AuthDao {
 
     if (!response.ok) {
       const error = new HttpException('Get API token error', response.status);
-      this.logger.log(error.message, this.getAPIToken.name);
+      this.logger.warn(error.message, this.getAPIToken.name);
       throw error;
     }
 

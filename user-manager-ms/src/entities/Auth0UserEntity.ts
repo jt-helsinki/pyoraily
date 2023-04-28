@@ -60,9 +60,11 @@ export class Auth0UserEntity implements Auth0User {
 
   static fromUser(user: User): Auth0User {
     const { firstName, lastName, email, status, userRoles } = user;
-    let userRolesForEntity = userRoles ? [...userRoles] : [UserRole.ATHLETE];
+    let userRolesForEntity = userRoles;
     if ((!Array.isArray(userRoles) || !userRoles.length) && email.toLowerCase().endsWith('@pyoraily.fi')) {
       userRolesForEntity = [UserRole.SP];
+    } else if (!Array.isArray(userRoles) || !userRoles.length) {
+      userRolesForEntity = [UserRole.ATHLETE];
     }
 
     return new Auth0UserEntity({
@@ -73,7 +75,7 @@ export class Auth0UserEntity implements Auth0User {
       blocked: status === 'Blocked' ? true : false,
       user_roles: userRolesForEntity,
       app_metadata: {
-        user_roles: userRolesForEntity as UserRole[],
+        user_roles: userRolesForEntity,
       },
     });
   }
@@ -85,6 +87,10 @@ export class Auth0UserEntity implements Auth0User {
       family_name: lastName,
       name: `${firstName} ${lastName}`,
       email: email,
+      app_metadata: {
+        user_roles: user.userRoles?.length ? user.userRoles : [UserRole.ATHLETE],
+      },
+      user_roles: user.userRoles?.length ? user.userRoles : [UserRole.ATHLETE],
       user_metadata: {
         year_of_birth: yearOfBirth as number,
         gender: gender as Gender,

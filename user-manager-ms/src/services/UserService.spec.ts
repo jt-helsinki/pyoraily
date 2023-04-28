@@ -1,7 +1,9 @@
 import { Auth0UserEntity } from '@src/entities/Auth0UserEntity';
 import { ADMIN_MOCK_USER_ENTITY, ATHLETE_MOCK_USER_ENTITY, HPY_MOCK_USER_ENTITY } from '@src/mocks/user.mock';
 import {
-  ATHLETE_MOCK_AUTH0_USER, MOCK_AUTH0_USER_ADMIN, HPY_MOCK_AUTH0_USER
+  ATHLETE_MOCK_AUTH0_USER,
+  MOCK_AUTH0_USER_ADMIN,
+  HPY_MOCK_AUTH0_USER,
 } from 'pyoraily-shared-backend/test/mocks/auth0.mock';
 import { mockGetEnv } from 'pyoraily-shared-backend/test/mocks/env-vars.mock';
 import { Auth0Service } from '@src/services/Auth0Service';
@@ -38,7 +40,11 @@ describe('UsersService', () => {
   it('getUsers should call mock users repo getUsers', () => {
     const usersServiceForTest = new UserService(mockAuthService);
     const getUsersSpy = jest.spyOn(mockAuthService, 'getUsers');
-    expect(usersServiceForTest.getUsers()).resolves.toEqual([ATHLETE_MOCK_USER_ENTITY, ADMIN_MOCK_USER_ENTITY, HPY_MOCK_USER_ENTITY]);
+    expect(usersServiceForTest.getUsers()).resolves.toEqual([
+      ATHLETE_MOCK_USER_ENTITY,
+      ADMIN_MOCK_USER_ENTITY,
+      HPY_MOCK_USER_ENTITY,
+    ]);
     expect(getUsersSpy).toHaveBeenCalled();
   });
 
