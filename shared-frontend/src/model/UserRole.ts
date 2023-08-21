@@ -8,4 +8,5 @@ export enum UserRole {
   HPY = 'HPY',
   SP = 'SP',
   ATHLETE = 'ATHLETE',
+  DISCIPLINE_MANAGER = 'DISCIPLINE_MANAGER',
 }

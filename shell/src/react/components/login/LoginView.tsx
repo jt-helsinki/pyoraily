@@ -10,6 +10,7 @@ import * as LoginService from '@src/services/LoginService';
 import * as React from 'react';
 import { Navigate, useSearchParams } from 'react-router-dom';
 import { Button, Header } from 'semantic-ui-react';
+import { LoginLoadingComponent } from '@src/react/components/login/LoginLoadingComponent';
 
 /**
  * Redirects a nonauthenticated user to an address where they can authenticate themself.
@@ -23,41 +24,9 @@ export const LoginView: React.FunctionComponent = (): React.ReactElement | null 
     searchParams.get('redirectTo') ||
     RouteUtils.removeWildcardFromPath(RouteConfig.PROTECTED_ROUTE_PATH_NODES.dashboard.path);
 
-  const initLogin = React.useCallback((): void => {
+  React.useEffect((): void => {
     LoginService.initLogin(redirectTo);
   }, [redirectTo]);
 
-  if (!authenticated) {
-    return (
-      <div
-        style={{
-          right: 0,
-          left: 0,
-          top: 0,
-          bottom: 0,
-          margin: 'auto',
-          width: '400px',
-          height: '500px',
-          position: 'absolute',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          flexDirection: 'column',
-        }}>
-        <img
-          width="150"
-          height="80"
-          src="https://pyoraily.fi/wp-content/uploads/Suomen-Pyoraily-Logo-150x80.png"
-          alt="Suomen Pyöräily Logo"
-        />
-        <Header>HPY Portal</Header>
-        <p style={{ marginTop: '25px' }}>
-          <Button primary onClick={initLogin}>
-            Sign in
-          </Button>
-        </p>
-      </div>
-    );
-  }
-  return <Navigate replace to={redirectTo} />;
+  return authenticated ? <Navigate replace to={redirectTo} /> : <LoginLoadingComponent message="Logging in..." />;
 };

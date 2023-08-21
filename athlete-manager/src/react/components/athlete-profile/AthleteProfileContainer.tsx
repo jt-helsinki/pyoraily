@@ -49,13 +49,44 @@ export const AthleteProfileContainer: React.FunctionComponent = (): React.ReactE
     });
   };
 
-  const onEventsSave = (events: Event[]) => {
+  const onRemoveEvent = (index: number): void => {
+    const newAthleteProfile: AthleteProfile = {
+      ...((athleteProfile as AthleteProfile) || ({} as AthleteProfile)),
+      events: athleteProfile?.events.filter((_, i) => i !== index) || [],
+    };
+    const toasterId = Date.now().toString();
+    mutateAsync(newAthleteProfile).then(() => {
+      requestEvent({
+        eventType: RequestEventType.TOASTER_NOTIFICATION_REQUEST,
+        id: toasterId,
+        message: 'Event changes saved',
+        type: 'info',
+        autoDismiss: true,
+      });
+      refetch();
+    });
+  };
+
+  const onSaveEvent = (event: Event, index: number): void => {
+    const newEvents = [...(athleteProfile?.events || [])];
+    if (index === -1) {
+      newEvents.push(event);
+    } else {
+      newEvents[index] = event;
+    }
+
     const newAthleteProfile: AthleteProfile = {
       ...((athleteProfile as AthleteProfile) || ({} as AthleteProfile)),
       nominatedCategory: athleteProfile?.nominatedCategory || '',
       nominatedDisciplines: athleteProfile?.nominatedDisciplines || [],
       year: Number(year),
-      events,
+      firstName: userProfile.firstName,
+      lastName: userProfile.lastName,
+      gender: userProfile.gender as any,
+      yearOfBirth: userProfile.yearOfBirth,
+      events: newEvents.sort((a: any, b: any) => {
+        return a.eventDate - b.eventDate;
+      }),
     };
     const toasterId = Date.now().toString();
     mutateAsync(newAthleteProfile).then(() => {
@@ -109,7 +140,8 @@ export const AthleteProfileContainer: React.FunctionComponent = (): React.ReactE
       <AthleteProfileEvents
         events={athleteProfile?.events || []}
         year={year}
-        onSubmit={(event: Event[]) => onEventsSave(event)}
+        onSaveEvent={onSaveEvent}
+        onRemoveEvent={onRemoveEvent}
       />
     </div>
   );

@@ -12,7 +12,7 @@
     "start:athlete-manager": "cd athlete-manager && npm start",
     "start:hpy-manager": "cd hpy-manager && npm start",
     "start:user-manager-ms": "cd user-manager-ms && npm run start:sls",
-    "start:athlete-manager-ms": "cd athlete-manager-ms && npm start",
+    "start:athlete-manager-ms": "cd athlete-manager-ms && npm run start:sls",
     "lint:fix:everything": "cd shell && npm run lint:fix; cd ../user-manager-ms && npm run lint:fix; cd ../athlete-manager && npm run lint:fix; cd ../hpy-manager && npm run lint:fix; cd ../athlete-manager-ms && npm run lint:fix; cd ../shared-frontend && npm run lint:fix; cd ../shared-backend && npm run lint:fix;",
     "format:everything": "cd shell && npm run format; cd ../user-manager-ms && npm run format; cd ../athlete-manager && npm run format; cd ../hpy-manager && npm run format; cd ../shared-frontend && npm run format;  cd ../shared-backend && npm run format;",
     "lint-format:everything": "npm run lint:fix:everything && npm run format:everything",

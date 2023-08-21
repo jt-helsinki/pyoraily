@@ -10,7 +10,7 @@ export const RESULT_SCHEMA_NAME = 'Result';
 
 export interface Result {
   id?: string;
-  placing: number;
+  placing: number | 'DNF' | 'DNS' | 'DSQ';
   distance: number;
   distanceUnit: 'km' | 'laps' | 'm';
   courseProfile: string;
@@ -24,8 +24,8 @@ export interface Result {
 
 @Schema()
 export class ResultDocument extends Document implements Result {
-  @Prop({ type: Number, required: true })
-  placing: number;
+  @Prop({ type: String, required: true })
+  placing: number | 'DNF' | 'DNS' | 'DSQ';
 
   @Prop({ type: Number, required: true })
   distance: number;

@@ -6,13 +6,14 @@
 
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { EventSchema } from '@src/model/Event';
-import mongoose, { Document } from 'mongoose';
+import { Document } from 'mongoose';
 import { Event } from '@src/model/Event';
 import { Gender } from 'pyoraily-shared-backend/model/user/User';
 
 export const ATHLETE_PROFILE_SCHEMA_NAME = 'AthleteProfile';
 
 export interface AthleteProfile {
+  _id?: string;
   id?: string;
   userID: string;
   firstName: string;

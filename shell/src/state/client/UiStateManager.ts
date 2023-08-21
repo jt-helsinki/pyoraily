@@ -9,7 +9,7 @@ import { UiState } from '@src/state/client/state/UiState';
 
 export class StateManager extends AbstractStateManager<UiState> {
   constructor() {
-    super('UI_STATE_STORE', true, false);
+    super('UI_STATE_STORE', false, false);
   }
 
   protected setInitialState(set: (setFunction: (partial: UiState) => void) => any): UiState {

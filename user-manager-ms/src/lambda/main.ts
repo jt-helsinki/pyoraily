@@ -32,7 +32,7 @@ async function bootstrap(): Promise<Handler<APIGatewayEvent, void>> {
   }
   app.setGlobalPrefix('user-manager');
   app.use(cookieParser());
-  app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true }));
+  app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true, forbidUnknownValues: true }));
 
   await app.init();
   const expressApp = app.getHttpAdapter().getInstance();

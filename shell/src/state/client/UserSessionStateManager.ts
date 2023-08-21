@@ -10,7 +10,7 @@ import { UserSessionState } from '@src/state/client/state/UserSessionState';
 
 class StateManager extends AbstractStateManager<UserSessionState> {
   constructor() {
-    super('USER_SESSION_STATE_STORE', true, false);
+    super('USER_SESSION_STATE_STORE', false, false);
   }
 
   protected setInitialState(set: (setFunction: (partial: UserSessionState) => void) => any): UserSessionState {

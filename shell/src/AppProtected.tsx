@@ -19,8 +19,11 @@ import * as React from 'react';
 import 'react-data-grid/lib/styles.css';
 import { Route, Routes } from 'react-router-dom';
 import { Sidebar } from 'semantic-ui-react';
+import { useFetchProfileServerStateStore } from '@src/react/hooks/state/server/useUserServerStateStore';
+import { LoginLoadingComponent } from '@src/react/components/login/LoginLoadingComponent';
 
 export const AppProtected: React.FunctionComponent = (): React.ReactElement => {
+  const { isLoading: isLoadingProfile } = useFetchProfileServerStateStore();
   const userRoles: UserRole[] = useUserRolesFromUseUserSessionStateStore();
   const PROTECTED_ROUTES: (React.ReactElement | null)[] = React.useMemo(
     () =>
@@ -39,7 +42,7 @@ export const AppProtected: React.FunctionComponent = (): React.ReactElement => {
     );
   }, []);
 
-  return (
+  return !isLoadingProfile ? (
     <MainHeaderNavigation>
       <div className="app-content-container">
         <Notifications />
@@ -48,5 +51,7 @@ export const AppProtected: React.FunctionComponent = (): React.ReactElement => {
         </ProfileCompletionGuard>
       </div>
     </MainHeaderNavigation>
+  ) : (
+    <LoginLoadingComponent message="Redirecting to application..." />
   );
 };

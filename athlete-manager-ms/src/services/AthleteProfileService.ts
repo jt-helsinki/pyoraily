@@ -23,10 +23,10 @@ export class AthleteProfileService {
 
   async findAllByFilter(year: number, discipline: string, category: string, gender: string): Promise<AthleteProfile[]> {
     const query: any = {};
-    if (year) query.year = year;
-    if (discipline) query.nominatedDisciplines = { $in: [discipline] };
-    if (category) query.nominatedCategory = category;
-    if (gender) query.gender = gender;
+    if (year && String(year) !== '-') query.year = year;
+    if (discipline && discipline !== '-') query.nominatedDisciplines = { $in: [discipline] };
+    if (category && category !== '-') query.nominatedCategory = category;
+    if (gender && gender !== '-') query.gender = gender;
     return this.athleteProfileSchema.find(query).exec();
   }
 

@@ -5,7 +5,7 @@
  */
 import { HpyAthleteProfileBodyComponent } from '@src/react/components/hpy-athlete-profile/HpyAthleteProfileBodyComponent';
 import { useFetchAthleteProfilesServerStateStore } from '@src/react/hooks/state/server/useAthleteManagerServerStateStore';
-import { CATEGORIES, DISCIPLINES, GENDERS, YEARS } from 'pyoraily-shared-frontend/lib/constants';
+import { CATEGORIES, DISCIPLINES, GENDERS, EMPTY_OPTION, YEARS } from 'pyoraily-shared-frontend/lib/constants';
 import { AthleteProfile } from 'pyoraily-shared-frontend/model';
 import { stringToSentenceCase } from 'pyoraily-shared-frontend/utils/StringUtils';
 import { useState } from 'react';
@@ -16,11 +16,11 @@ export const HpyAthleteProfileListContainer: React.FunctionComponent = (): React
   const [visible, setVisible] = useState(false);
   const [year, setYear] = useState<number>(new Date(Date.now()).getFullYear());
   const [yearFilter, setYearFilter] = useState<number>(year);
-  const [discipline, setDiscipline] = useState<string>('Road');
+  const [discipline, setDiscipline] = useState<string>('-');
   const [disciplineFilter, setDisciplineFilter] = useState<string>(discipline);
-  const [category, setCategory] = useState<string>('U17');
+  const [category, setCategory] = useState<string>('-');
   const [categoryFilter, setCategoryFilter] = useState<string>(category);
-  const [gender, setGender] = useState<string>('male');
+  const [gender, setGender] = useState<string>('-');
   const [genderFilter, setGenderFilter] = useState<string>(gender);
   const { data: athleteProfiles, isFetching } = useFetchAthleteProfilesServerStateStore(
     Number(yearFilter),
@@ -53,7 +53,7 @@ export const HpyAthleteProfileListContainer: React.FunctionComponent = (): React
                   fluid={true}
                   selection={true}
                   onChange={(e: any, { value }: any) => setYear(value as any)}
-                  options={YEARS}
+                  options={[EMPTY_OPTION, ...YEARS]}
                 />
               </Form.Field>
             </Grid.Column>
@@ -67,7 +67,7 @@ export const HpyAthleteProfileListContainer: React.FunctionComponent = (): React
                   fluid={true}
                   selection={true}
                   onChange={(e: any, { value }: any) => setDiscipline(value as any)}
-                  options={DISCIPLINES}
+                  options={[EMPTY_OPTION, ...DISCIPLINES]}
                 />
               </Form.Field>
             </Grid.Column>
@@ -81,7 +81,7 @@ export const HpyAthleteProfileListContainer: React.FunctionComponent = (): React
                   fluid={true}
                   selection={true}
                   onChange={(e: any, { value }: any) => setGender(value as any)}
-                  options={GENDERS}
+                  options={[EMPTY_OPTION, ...GENDERS]}
                 />
               </Form.Field>
             </Grid.Column>
@@ -95,7 +95,7 @@ export const HpyAthleteProfileListContainer: React.FunctionComponent = (): React
                   fluid={true}
                   selection={true}
                   onChange={(e: any, { value }: any) => setCategory(value as any)}
-                  options={CATEGORIES}
+                  options={[EMPTY_OPTION, ...CATEGORIES]}
                 />
               </Form.Field>
             </Grid.Column>

@@ -9,7 +9,7 @@ import { UserRole } from 'pyoraily-shared-frontend/model/UserRole';
 import * as UserFormUtils from '@src/react/components/users/UserFormUtils';
 import { Formik, FormikProps } from 'formik';
 import * as React from 'react';
-import { Button, Dropdown, Form, Modal, Radio } from 'semantic-ui-react';
+import { Button, Dropdown, Form, Input, Label, Modal, Radio } from 'semantic-ui-react';
 import { DropdownItemProps } from 'semantic-ui-react/dist/commonjs/modules/Dropdown/DropdownItem';
 
 interface Props {
@@ -51,86 +51,131 @@ export const UserUpsertForm: React.FunctionComponent<Props> = (props: Props): Re
           onSubmit={(values: User): void => {
             props.onSubmit(values);
           }}>
-          {(formik: FormikProps<User>): React.ReactElement => (
-            <Form id="user-upsert-form">
-              <Form.Input
-                type="text"
-                required={true}
-                id="user-upsert-form-first-name"
-                name="firstName"
-                label="First name"
-                value={formik.values.firstName}
-                disabled={props.isSubmitting}
-                error={formik.errors.firstName}
-                onChange={formik.handleChange}
-              />
-              <Form.Input
-                type="text"
-                required={true}
-                id="user-upsert-form-last-name"
-                name="lastName"
-                label="Last name"
-                value={formik.values.lastName}
-                disabled={props.isSubmitting}
-                error={formik.errors.lastName}
-                onChange={formik.handleChange}
-              />
-              <Form.Input
-                type="text"
-                required={true}
-                id="user-upsert-form-email"
-                name="email"
-                label="Email"
-                value={formik.values.email}
-                disabled={props.isSubmitting}
-                error={formik.errors.email}
-                onChange={formik.handleChange}
-              />
-              <Form.Field>
-                <label>Roles</label>
-                <Dropdown
-                  id="user-upsert-form-user-roles"
-                  name="userRoles"
-                  placeholder="Roles"
+          {(formik: FormikProps<User>): React.ReactElement => {
+            const { values, setFieldValue, submitForm, submitCount, errors, dirty, isValid, touched, setTouched } =
+              formik;
+            return (
+              <Form id="user-upsert-form">
+                <Form.Field
+                  control={Input}
+                  type="text"
+                  required={true}
                   fluid={true}
-                  multiple={true}
-                  selection
-                  options={mappedUserRoles}
+                  id="user-upsert-form-first-name"
+                  name="firstName"
+                  label="First name"
+                  value={values.firstName}
                   disabled={props.isSubmitting}
-                  defaultValue={formik.values.userRoles}
-                  error={formik.errors.userRoles as any}
-                  onChange={(event: any, data: any) => formik.setFieldValue('userRoles', data.value, false)}
-                />
-              </Form.Field>
-              <Form.Group inline={true} unstackable={false}>
-                <label>Status</label>
-                <Form.Field
-                  control={Radio}
-                  label="Active"
-                  value="Active"
-                  name="status"
-                  disabled={props.isSubmitting}
-                  checked={formik.values.status === 'Active'}
-                  onClick={() => formik.setFieldValue('status', 'Active', false)}
+                  onChange={(event: any, data: any) => {
+                    setTouched({ firstName: true });
+                    setFieldValue('firstName', data.value, true);
+                  }}
+                  error={
+                    errors.firstName && (submitCount > 0 || touched.firstName)
+                      ? { content: errors.firstName, pointing: 'above' }
+                      : false
+                  }
                 />
                 <Form.Field
-                  control={Radio}
-                  label="Blocked"
-                  value="Blocked"
-                  name="status"
+                  control={Input}
+                  type="text"
+                  required={true}
+                  fluid={true}
+                  id="user-upsert-form-last-name"
+                  name="lastName"
+                  label="Last name"
+                  value={values.lastName}
                   disabled={props.isSubmitting}
-                  checked={formik.values.status === 'Blocked'}
-                  onClick={() => formik.setFieldValue('status', 'Blocked', false)}
+                  onChange={(event: any, data: any) => {
+                    setTouched({ lastName: true });
+                    setFieldValue('lastName', data.value, true);
+                  }}
+                  error={
+                    errors.lastName && (submitCount > 0 || touched.lastName)
+                      ? { content: errors.lastName, pointing: 'above' }
+                      : false
+                  }
                 />
-              </Form.Group>
-              <Button secondary={true} onClick={props.onCancel}>
-                Cancel
-              </Button>
-              <Button primary={true} onClick={formik.submitForm}>
-                Save
-              </Button>
-            </Form>
-          )}
+                <Form.Field
+                  control={Input}
+                  type="text"
+                  required={true}
+                  fluid={true}
+                  id="user-upsert-form-email"
+                  name="email"
+                  label="Email"
+                  value={values.email}
+                  disabled={props.isSubmitting}
+                  onChange={(event: any, data: any) => {
+                    setTouched({ email: true });
+                    setFieldValue('email', data.value, true);
+                  }}
+                  error={
+                    errors.email && (submitCount > 0 || touched.email)
+                      ? { content: errors.email, pointing: 'above' }
+                      : false
+                  }
+                />
+                <Form.Field required={true}>
+                  <label>Roles</label>
+                  <Dropdown
+                    id="user-upsert-form-user-roles"
+                    name="userRoles"
+                    placeholder="Roles"
+                    fluid={true}
+                    multiple={true}
+                    selection
+                    options={mappedUserRoles}
+                    disabled={props.isSubmitting}
+                    defaultValue={values.userRoles}
+                    error={errors.userRoles as any}
+                    onChange={(event: any, data: any) => {
+                      setTouched({ userRoles: true });
+                      setFieldValue('userRoles', data.value, true);
+                    }}
+                  />
+                  {errors.userRoles && (submitCount > 0 || touched.userRoles) ? (
+                    <Label prompt pointing="above">
+                      {errors.userRoles}
+                    </Label>
+                  ) : null}
+                </Form.Field>
+                <Form.Group inline={true} unstackable={false}>
+                  <label>Status</label>
+                  <Form.Field
+                    control={Radio}
+                    label="Active"
+                    value="Active"
+                    name="status"
+                    disabled={props.isSubmitting}
+                    checked={values.status === 'Active'}
+                    onClick={() => {
+                      setTouched({ status: true });
+                      setFieldValue('status', 'Active', true);
+                    }}
+                  />
+                  <Form.Field
+                    control={Radio}
+                    label="Blocked"
+                    value="Blocked"
+                    name="status"
+                    disabled={props.isSubmitting}
+                    checked={values.status === 'Blocked'}
+                    onClick={() => {
+                      setTouched({ status: true });
+                      setFieldValue('status', 'Blocked', true);
+                    }}
+                  />
+                </Form.Group>
+                <Button secondary={true} onClick={props.onCancel}>
+                  Cancel
+                </Button>
+                <Button primary={true} onClick={submitForm} disabled={!dirty || (dirty && !isValid)}>
+                  Save
+                </Button>
+              </Form>
+            );
+          }}
         </Formik>
       </Modal.Content>
     </>

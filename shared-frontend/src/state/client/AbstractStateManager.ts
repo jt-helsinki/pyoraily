@@ -74,7 +74,7 @@ export abstract class AbstractStateManager<S extends State> {
 
   private storeName: string;
 
-  protected constructor(storeName: string, persistToBrowserLocalStorage = true, logToConsole = false) {
+  protected constructor(storeName: string, persistToBrowserLocalStorage = false, logToConsole = false) {
     this.storeName = storeName;
     this.persistToBrowserLocalStorage = persistToBrowserLocalStorage;
     this.logToConsole = logToConsole;

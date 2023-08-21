@@ -4,9 +4,7 @@
  *
  */
 
-import { DisciplineType, EventTypes } from '../model/types';
-
-export const EMPTY_OPTION = { key: '-', value: '-', text: '-' };
+import { DisciplineType, EventTypes } from './types';
 
 export const YEARS = Array.from({ length: new Date().getFullYear() - 2023 + 1 }, (_, i) => {
   const year: number = 2023 + i;

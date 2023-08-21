@@ -4,6 +4,7 @@
  *
  */
 import { Body, Controller, HttpStatus, Post, Res } from '@nestjs/common';
+import { AuthDto } from '@src/dtos/AuthDto';
 import { UserEntity } from '@src/entities/UserEntity';
 import { Auth0Service } from '@src/services/Auth0Service';
 import { UserService } from '@src/services/UserService';
@@ -16,7 +17,7 @@ export class AuthController {
   constructor(private readonly authService: Auth0Service, private readonly usersService: UserService) {}
 
   @Post('/authorize')
-  async authorize(@Body() body, @Res() response: Response): Promise<Response<User>> {
+  async authorize(@Body() body: AuthDto, @Res() response: Response): Promise<Response<User>> {
     const { id_token, claims } = await this.authService.authorize(body.code, body.state);
     const userEntity = UserEntity.fromAuthClaims(claims);
     const user = await this.usersService.getUser(userEntity.id);

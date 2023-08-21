@@ -3,13 +3,14 @@
  * MIT License.
  *
  */
+import { FormikDebug } from '@src/react/components/common/debug/FormikDebug';
 import * as UserUtils from 'pyoraily-shared-frontend/utils/UserUtils';
 import { MIN_YEAR, ProfileEditFormModelSchema } from '@src/model/schema/ProfileFormSchemas';
 import { User } from 'pyoraily-shared-frontend/model/User';
 import { UserRole } from 'pyoraily-shared-frontend/model/UserRole';
 import { Formik, FormikProps } from 'formik';
 import * as React from 'react';
-import { Button, Dimmer, Dropdown, Form, Header, Label, Loader, Modal, Radio } from 'semantic-ui-react';
+import { Button, Dimmer, Dropdown, Form, Header, Input, Label, Loader, Modal, Radio } from 'semantic-ui-react';
 
 interface Props {
   user: User;
@@ -48,133 +49,151 @@ export const ProfileEditForm = (props: Props): React.ReactElement => {
         onSubmit={(values: User): void => {
           props.onSave(values);
         }}>
-        {(formik: FormikProps<User>): React.ReactElement => (
-          <Form id="profile-update-form">
-            <Form.Field>
-              <label>First Name</label>
-              <Form.Input
-                type="text"
-                required={true}
-                id="profile-update-form-first-name"
-                name="firstName"
-                value={formik.values.firstName}
-                disabled={props.isSubmitting}
-                onChange={formik.handleChange}
-                error={
-                  formik.errors.firstName && (formik.submitCount > 0 || formik.touched.firstName)
-                    ? { content: formik.errors.firstName, pointing: 'above' }
-                    : false
-                }
-              />
-            </Form.Field>
-            <Form.Field>
-              <label>Last Name</label>
-              <Form.Input
+        {(formik: FormikProps<User>): React.ReactElement => {
+          const { values, setFieldValue, submitForm, submitCount, errors, touched, setTouched } = formik;
+          return (
+            <Form id="profile-update-form">
+              <Form.Field>
+                <Form.Field
+                  control={Input}
+                  type="text"
+                  required={true}
+                  id="profile-update-form-first-name"
+                  label="First Name"
+                  name="firstName"
+                  value={values.firstName}
+                  disabled={props.isSubmitting}
+                  onChange={(event: any, data: any) => {
+                    setTouched({ firstName: true });
+                    setFieldValue('firstName', data.value, true);
+                  }}
+                  error={
+                    errors.firstName && (submitCount > 0 || touched.firstName)
+                      ? { content: errors.firstName, pointing: 'above' }
+                      : false
+                  }
+                />
+              </Form.Field>
+              <Form.Field
+                control={Input}
                 type="text"
                 required={true}
                 id="profile-update-form-last-name"
+                label="Last Name"
                 name="lastName"
-                value={formik.values.lastName}
+                value={values.lastName}
                 disabled={props.isSubmitting}
-                onChange={formik.handleChange}
+                onChange={(event: any, data: any) => {
+                  setTouched({ lastName: true });
+                  setFieldValue('lastName', data.value, true);
+                }}
                 error={
-                  formik.errors.lastName && (formik.submitCount > 0 || formik.touched.lastName)
-                    ? { content: formik.errors.lastName, pointing: 'above' }
+                  errors.lastName && (submitCount > 0 || touched.lastName)
+                    ? { content: errors.lastName, pointing: 'above' }
                     : false
                 }
               />
-            </Form.Field>
-            {isAthlete ? (
-              <>
-                <Form.Group inline={true} unstackable={false}>
-                  <label>Gender</label>
-                  <Form.Field
-                    control={Radio}
-                    label="Male"
-                    value="male"
-                    name="gender"
-                    disabled={props.isSubmitting}
-                    checked={formik.values.gender === 'male'}
-                    onClick={() => formik.setFieldValue('gender', 'male', false)}
-                    error={!!(formik.errors.gender && (formik.submitCount > 0 || formik.touched.gender))}
-                  />
-                  <Form.Field
-                    control={Radio}
-                    label="Female"
-                    value="female"
-                    name="gender"
-                    disabled={props.isSubmitting}
-                    checked={formik.values.gender === 'female'}
-                    onClick={() => formik.setFieldValue('gender', 'female', false)}
-                    error={!!(formik.errors.gender && (formik.submitCount > 0 || formik.touched.gender))}
-                  />
-                  {formik.errors.gender && (formik.submitCount > 0 || formik.touched.gender) ? (
-                    <Label prompt pointing="above">
-                      {formik.errors.gender}
-                    </Label>
-                  ) : null}
-                </Form.Group>
-                <Form.Field>
-                  <label>Year of Birth</label>
-                  <Dropdown
-                    placeholder="Year of Birth"
-                    selection
-                    options={years}
-                    defaultValue={formik.values.yearOfBirth}
-                    disabled={props.isSubmitting}
-                    onChange={(event: any, data: any) => formik.setFieldValue('yearOfBirth', data.value, false)}
-                    error={!!(formik.errors.yearOfBirth && (formik.submitCount > 0 || formik.touched.yearOfBirth))}
-                  />
-                  {formik.errors.yearOfBirth && (formik.submitCount > 0 || formik.touched.yearOfBirth) ? (
-                    <Label prompt pointing="above">
-                      {formik.errors.yearOfBirth}
-                    </Label>
-                  ) : null}
-                </Form.Field>
-              </>
-            ) : null}
-            <Form.Field>
-              <label>Email</label>
-              <Form.Input
+              <Form.Group inline={true} unstackable={false}>
+                <label>Gender</label>
+                <Form.Field
+                  control={Radio}
+                  label="Male"
+                  value="male"
+                  name="gender"
+                  disabled={props.isSubmitting}
+                  checked={values.gender === 'male'}
+                  onClick={() => {
+                    setTouched({ gender: true });
+                    setFieldValue('gender', 'male', true);
+                  }}
+                  error={errors.gender && (submitCount > 0 || touched.gender)}
+                />
+                <Form.Field
+                  control={Radio}
+                  label="Female"
+                  value="female"
+                  name="gender"
+                  disabled={props.isSubmitting}
+                  checked={values.gender === 'female'}
+                  onClick={() => {
+                    setTouched({ gender: true });
+                    setFieldValue('gender', 'female', true);
+                  }}
+                  error={errors.gender && (submitCount > 0 || touched.gender)}
+                />
+                {errors.gender && (submitCount > 0 || touched.gender) ? (
+                  <Label prompt pointing="above">
+                    {errors.gender}
+                  </Label>
+                ) : null}
+              </Form.Group>
+              <Form.Field>
+                <label>Year of Birth</label>
+                <Dropdown
+                  placeholder="Year of Birth"
+                  selection
+                  options={years}
+                  defaultValue={values.yearOfBirth}
+                  disabled={props.isSubmitting}
+                  onChange={(event: any, data: any) => {
+                    setTouched({ yearOfBirth: true });
+                    setFieldValue('yearOfBirth', data.value, false);
+                  }}
+                  error={!!(errors.yearOfBirth && (submitCount > 0 || touched.yearOfBirth))}
+                />
+                {errors.yearOfBirth && (submitCount > 0 || touched.yearOfBirth) ? (
+                  <Label prompt pointing="above">
+                    {errors.yearOfBirth}
+                  </Label>
+                ) : null}
+              </Form.Field>
+              <Form.Field
+                control={Input}
                 type="text"
                 required={true}
                 id="profile-update-form-email"
+                label="Email"
                 name="email"
-                value={formik.values.email}
+                value={values.email}
                 disabled={props.isSubmitting}
-                onChange={formik.handleChange}
+                onChange={(event: any, data: any) => {
+                  setTouched({ email: true });
+                  setFieldValue('email', data.value, true);
+                }}
                 error={
-                  formik.errors.email && (formik.submitCount > 0 || formik.touched.email)
-                    ? { content: formik.errors.email, pointing: 'above' }
+                  errors.email && (submitCount > 0 || touched.email)
+                    ? { content: errors.email, pointing: 'above' }
                     : false
                 }
               />
-            </Form.Field>
-            <Form.Field>
-              <label>UCI ID</label>
-              <Form.Input
-                type="number"
+              <Form.Field
+                control={Input}
+                type="text"
                 required={true}
                 id="profile-update-form-uci-id"
+                label="UCI ID"
                 name="uciId"
-                value={formik.values.uciId}
+                value={values.uciId}
                 disabled={props.isSubmitting}
-                onChange={formik.handleChange}
+                onChange={(event: any, data: any) => {
+                  setTouched({ uciId: true });
+                  setFieldValue('uciId', data.value, true);
+                }}
                 error={
-                  formik.errors.uciId && (formik.submitCount > 0 || formik.touched.uciId)
-                    ? { content: formik.errors.uciId, pointing: 'above' }
+                  errors.uciId && (submitCount > 0 || touched.uciId)
+                    ? { content: errors.uciId, pointing: 'above' }
                     : false
                 }
               />
-            </Form.Field>
-            <Button secondary={true} onClick={props.onCancel}>
-              Cancel
-            </Button>
-            <Button primary={true} onClick={formik.submitForm}>
-              Save
-            </Button>
-          </Form>
-        )}
+              <Button secondary={true} onClick={props.onCancel}>
+                Cancel
+              </Button>
+              <Button primary={true} onClick={submitForm}>
+                Save
+              </Button>
+            </Form>
+          );
+        }}
       </Formik>
     </>
   );

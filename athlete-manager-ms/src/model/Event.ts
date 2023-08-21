@@ -7,18 +7,20 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Result, ResultSchema } from '@src/model/Result';
 import { Document } from 'mongoose';
+import { DisciplineType } from 'pyoraily-shared-backend/model/types';
 
 export const EVENT_SCHEMA_NAME = 'Event';
 
 export interface Event {
   id?: string;
   name: string;
-  discipline: string;
+  discipline: DisciplineType;
   country: string;
   category: string;
   eventClass: string;
   eventDate: Date;
   notes: string;
+  results: Result[];
 }
 
 @Schema()
@@ -27,7 +29,7 @@ export class EventDocument extends Document implements Event {
   name: string;
 
   @Prop({ type: String, required: true })
-  discipline: string;
+  discipline: DisciplineType;
 
   @Prop({ type: String, required: true })
   country: string;
@@ -52,11 +54,6 @@ export class EventDocument extends Document implements Event {
 }
 
 export const EventSchema = SchemaFactory.createForClass(EventDocument);
-
-// Add virtual id field to the schema
-EventSchema.virtual('id').get(function (this: EventDocument) {
-  return this._id.toHexString();
-});
 
 // Modify toJSON to include the virtual field and remove _id
 EventSchema.set('toJSON', {

@@ -11,6 +11,7 @@ import * as LoginService from '@src/services/LoginService';
 import * as React from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Dimmer, Loader } from 'semantic-ui-react';
+import { LoginLoadingComponent } from '@src/react/components/login/LoginLoadingComponent';
 
 /**
  * auth/callback
@@ -36,16 +37,16 @@ export const Auth0CallbackPage: React.FunctionComponent = (): React.ReactElement
         if (isOK) {
           navigate(urlState || RouteUtils.removeWildcardFromPath(RouteConfig.PROTECTED_ROUTE_PATH_NODES.default.path));
         } else {
-          navigate(RootRoutePaths.ROOT_ROUTE_PATHS.login);
+          // set a timeout to give the UI a chance to display a
+          // message before redirecting to the logout page
+          setTimeout(() => {
+            navigate(RootRoutePaths.ROOT_ROUTE_PATHS.logout);
+          }, 3000);
         }
       });
     }
   }, []);
 
   // If we do not have the user nor errors, then we are waiting for the JWT exchange.
-  return (
-    <Dimmer active inverted>
-      <Loader inverted>Logging in</Loader>
-    </Dimmer>
-  );
+  return <LoginLoadingComponent message="Loading data..." />;
 };

@@ -4,7 +4,7 @@
  *
  */
 
-import { UserRole } from '../../dist/model/user/UserRole';
+import { UserRole } from '../model/user/UserRole';
 import { Claims } from '../model/auth0/Claims';
 import { User } from '../model/user/User';
 import { UserStatus } from '../model/user/UserStatus';

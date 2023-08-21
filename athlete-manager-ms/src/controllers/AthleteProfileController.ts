@@ -4,6 +4,7 @@
  *
  */
 import { Body, Controller, Delete, Get, Param, Patch, Post, Put, Req, UseGuards } from '@nestjs/common';
+import { AthleteProfileDto } from '@src/dto/AthleteProfileDto';
 import { RolesRequired } from 'pyoraily-shared-backend/decorators/RolesRequiredDecorator';
 import { JwtAuthGuard } from 'pyoraily-shared-backend/guards/AuthGuard';
 
@@ -33,7 +34,7 @@ export class AthleteProfileController {
         nominatedCategory: 'U17',
         nominatedDisciplines: [],
         year: year,
-      };
+      } as any;
       return this.athleteProfileService.create(newAthleteProfile);
     }
     return athleteProfile;
@@ -45,7 +46,7 @@ export class AthleteProfileController {
   async update(
     @Req() request: { user: User },
     @Param('year') year: number,
-    @Body() athleteProfile: AthleteProfile
+    @Body() athleteProfile: AthleteProfileDto
   ): Promise<AthleteProfile> {
     const newAthleteProfile: AthleteProfile = {
       ...athleteProfile,

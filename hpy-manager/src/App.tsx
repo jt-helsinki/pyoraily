@@ -11,8 +11,6 @@ import { HpyAthleteProfileListContainer } from '@src/react/components/hpy-athlet
 import { requestEvent, RequestEventType } from 'pyoraily-shared-frontend/events';
 import React from 'react';
 import '@src/styles/index.scss';
-import { QueryClientProvider } from '@tanstack/react-query';
-import { ServerState } from '@src/state/server/ServerState';
 
 const App = (): React.ReactElement => {
   React.useEffect(() => {
@@ -24,11 +22,7 @@ const App = (): React.ReactElement => {
       eventType: RequestEventType.USER_PROFILE_REQUEST,
     });
   }, []);
-  return (
-    <QueryClientProvider client={ServerState}>
-      <HpyAthleteProfileListContainer />
-    </QueryClientProvider>
-  );
+  return <HpyAthleteProfileListContainer />;
 };
 
 export default App;

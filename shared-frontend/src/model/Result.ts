@@ -4,11 +4,11 @@
  *
  */
 export interface Result {
-  placing: number;
-  distance: number;
+  placing: number | null;
+  distance: number | null;
   distanceUnit: 'km' | 'laps' | 'm';
-  numberOfStarters: number;
-  numberOfFinishers: number;
+  numberOfStarters: number | null;
+  numberOfFinishers: number | null;
   timeBehind: string;
   resultDate: Date;
   raceType: string;

@@ -10,7 +10,7 @@ const placingValidation = Yup.mixed().test(
   'is-positive-integer-or-DNF',
   'Value must be a positive number or "DNF"',
   (value) => {
-    if (value === 'DNF') return true;
+    if (value === 'DNF' || value === 'DNS' || value === 'DSQ') return true;
 
     const numberValue = Number(value);
     return Number.isInteger(numberValue) && numberValue > 0;
@@ -18,7 +18,7 @@ const placingValidation = Yup.mixed().test(
 );
 
 export const ResultSchema = Yup.object().shape({
-  placing: placingValidation.required('Placing is required'),
+  placing: placingValidation.required('Placing is required or DNF, DNS, DSQ'),
   distance: Yup.number().positive().required('Distance is required'),
   distanceUnit: Yup.mixed().oneOf(['km', 'laps', 'm']).required('Distance units is required'),
   numberOfStarters: Yup.number().positive().integer().required('Number of starters is required'),
